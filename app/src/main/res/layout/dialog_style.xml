@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.xuexiang.xui.widget.edittext.verify.VerifyCodeEditText
+        android:id="@+id/vcet_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginRight="10dp"
+        app:vcet_is_pwd="false"
+        app:vcet_number="4"
+        app:vcet_pwd_radius="10dp"
+        app:vcet_text_color="#000000"
+        app:vcet_width="50dp" />
+</LinearLayout>
