@@ -60,43 +60,5 @@ public class InternetModel {
     }
 
 
-    public static void getConfig(ConfigBean configBean) {
 
-        OkHttpClient okHttpClient  = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10,TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .build();
-
-        ListConfig listConfig = new ListConfig();
-        listConfig.setMsg(configBean.getPhone());
-        final Gson gson = new Gson();
-
-        String json = gson.toJson(listConfig);
-        Log.e("TAG", "上传的json: "+json );
-
-        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8")
-                , json);
-        Request request = new Request.Builder()
-                .url("http://shop.chengzzz.com/ems/save")//请求的url
-                .post(requestBody)
-                .build();
-
-        final Call call = okHttpClient.newCall(request);
-
-        call.enqueue(new Callback() {
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                System.out.println("连接失败");
-                Log.e("TAG", "onFailure: "+e );
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.e("TAG", "onResponse: "+response.body().string());
-
-            }
-        });
-
-    }
 }

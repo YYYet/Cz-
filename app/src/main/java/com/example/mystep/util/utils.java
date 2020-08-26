@@ -13,8 +13,11 @@ import androidx.core.app.ActivityCompat;
 import com.example.mystep.callback.mModifyCallback;
 import com.example.mystep.model.LoginModel;
 
+import java.io.UnsupportedEncodingException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +44,9 @@ public class utils {
             "&longitude=121.492479&screenheight=1280&os_country=CN&timezone=Asia%2FShanghai&cityCode=310100" +
             "&os_langs=zh&platform=android&clientId=8e844e28db7245eb81823132464835eb&openudid=&countryCode=" +
             "&country=%E4%B8%AD%E5%9B%BD&screenwidth=720&network_type=wifi&appType=6&area=CN&latitude=31.247221&language=zh";
+
+    public static final String loginByPwd="https://sports.lifesense.com/sessions_service/login?country=%E4%B8%AD%E5%9B%BD&screenWidth=1080&city=%E6%B9%96%E5%B7%9E&cityCode=330500&timezone=Asia%2FShanghai&latitude=30.847583&os_country=CN&channel=huawei&language=zh&roleType=0&openudid=&platform=android&province=%E6%B5%99%E6%B1%9F%E7%9C%81&appType=6&requestId=5727d0ea9fef41bfb2e8f7cf7e16a3dc&countryCode=&systemType=2&longitude=119.929072&devicemodel=HMA-AL00&area=CN&screenwidth=1080&os_langs=zh&provinceCode=330000&screenHeight=2049&promotion_channel=huawei&rnd=19843c63&version=4.6.7&areaCode=330522&requestToken=024a53ce2116c7dad4c5c0fa4237552e&network_type=wifi&osversion=10&screenheight=2049&ts=1598005610";
+
     /*动态权限获取*/
     public static void verifyStoragePermissions(Activity activity) {
         int REQUEST_EXTERNAL_STORAGE = 1;
@@ -62,11 +68,51 @@ public class utils {
         }
     }
 
+    /*
+     * MD5加密
+     */
+
+        public static String md5(String string) {
+
+            byte[] hash;
+
+            try {
+
+                hash = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
+
+            } catch (NoSuchAlgorithmException e) {
+
+                throw new RuntimeException("Huh, MD5 should be supported?", e);
+
+            } catch (UnsupportedEncodingException e) {
+
+                throw new RuntimeException("Huh, UTF-8 should be supported?", e);
+
+            }
+
+
+
+            StringBuilder hex = new StringBuilder(hash.length * 2);
+
+            for (byte b : hash) {
+
+                if ((b & 0xFF) < 0x10) hex.append("0");
+
+                hex.append(Integer.toHexString(b & 0xFF));
+
+            }
+
+            return hex.toString();
+
+        }
+
+
+
 
     public static void modifyByCookie(String steps, String userid,String cookies, Activity activity) throws ParseException {
-        if (Integer.parseInt(steps)>=20000){
+      /*  if (Integer.parseInt(steps)>=20000){
             steps = "20000";
-        }
+        }*/
         LoginModel loginModel = new LoginModel();
         loginModel.postAsynModifyStepsHttpByCookie(activity,uploadMobileStep, steps,userid,cookies, new mModifyCallback() {
             @Override

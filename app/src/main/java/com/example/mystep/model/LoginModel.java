@@ -9,6 +9,7 @@ import com.example.mystep.bean.ConfigBean;
 import com.example.mystep.bean.Message;
 
 import com.example.mystep.bean.Modifydata;
+import com.example.mystep.bean.PwdLogin;
 import com.example.mystep.bean.UserInfo;
 import com.example.mystep.bean.VerificationCode;
 import com.example.mystep.bean.listdata;
@@ -40,7 +41,6 @@ import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.mystep.model.DatabaseModel.insertText;
-import static com.example.mystep.model.InternetModel.getConfig;
 import static com.example.mystep.util.utils.getMacAddress;
 import static com.example.mystep.util.utils.getMyUUID;
 
@@ -205,6 +205,103 @@ public class LoginModel {
         });
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void LoginByPwd(String url, PwdLogin account, Activity activity, final mLoginCallback callback) {
+
+        OkHttpClient okHttpClient  = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10,TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
+
+        phone = account.getLoginName();
+        uuid = getMacAddress();
+        final Gson gson = new Gson();
+
+        String json = gson.toJson(account);
+        Log.e("TAG", "密码登录的请求体: "+json );
+
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8")
+                , json);
+        Request request = new Request.Builder()
+                .url(url)//请求的url
+                .post(requestBody)
+                .addHeader("User-Agent", "Dalvik/2.1.0 (Linux; U; Android 5.1.1; Magic2 Build/LMY48Z)")
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .addHeader("Host", "sports.lifesense.com")
+                .addHeader("Connection", "Keep-Alive")
+                .build();
+
+        final Call call = okHttpClient.newCall(request);
+
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("连接失败");
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (null != response.header("Set-Cookie")) {
+                    cookie = response.header("Set-Cookie");
+                    Log.e("TAG", "登录响应的cookie: "+cookie );
+           /*         SharedPreferences preferences = activity.getSharedPreferences("cookie", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("cookies",cookie.toString());
+                    editor.commit();*/
+
+                }
+
+                String json=response.body().string();  //假设从服务拿出来的json字符串，就是上面的内容
+                Log.e("", "登录结果的响应: "+json );
+                UserInfo account = new Gson().fromJson(json,UserInfo.class);
+                if (account.getCode().equals("412")){
+                    callback.onLoginFailed(account.getMsg());
+                }else {
+           /*         SharedPreferences preferences = activity.getSharedPreferences("cookie", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("userid",account.getData().getUserId().toString());
+                    editor.commit();*/
+                    userid = account.getData().getUserId().toString();
+
+                    insertText(phone,userid,cookie,uuid);
+
+
+
+                    callback.onLoginSuccess(account);
+                }
+
+
+
+            }
+        });
+
+    }
+
+
+
+
 
 
     /*

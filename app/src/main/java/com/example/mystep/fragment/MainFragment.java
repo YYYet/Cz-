@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -53,7 +54,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.mystep.model.InternetModel.getConfig;
+
 import static com.example.mystep.model.ViewModel.Dialog_tips;
 
 import static com.example.mystep.util.utils.getMacAddress;
@@ -78,6 +79,10 @@ public class MainFragment extends BaseFragment  {
     ImageView imageview;
     @BindView(R.id.textView5)
     TextView textView5;
+    @BindView(R.id.textView6)
+    TextView textView6;
+    @BindView(R.id.pwdlogin)
+    TextView pwdlogin;
     String userid;
     private LoginModel mLoginModel;
     public Handler handler = new Handler(){
@@ -111,16 +116,14 @@ public class MainFragment extends BaseFragment  {
         imageview.setOnClickListener(new imageView_setOnClickListener());
         imageview.setOnTouchListener(new imageView_setOnTouchListener());
         phoneNumber.addTextChangedListener(new phoneNumber_setTextChangeListener());
+       textView6.setOnClickListener(new joinQQGroup_setOnClickListener());
         mLoginModel = new LoginModel();
         commit.setOnClickListener(new commit_setOnListener());
 
-        textView5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPage(CookiesFragment.class);
-            }
+        textView5.setOnClickListener(v -> openPage(CookiesFragment.class));
+        pwdlogin.setOnClickListener(v -> {
+            openPage(PwdLoginFragment.class);
         });
-
 
     }
 
@@ -195,6 +198,19 @@ public class MainFragment extends BaseFragment  {
     }
 
 
+    public boolean joinQQGroup(String key) {
+        Intent intent = new Intent();
+        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D" + key));
+        // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            // 未安装手Q或安装的版本不支持
+            return false;
+        }
+    }
+
 
     public VerificationCode getUserInput(){
         VerificationCode vc =new VerificationCode();
@@ -209,7 +225,17 @@ public class MainFragment extends BaseFragment  {
         ac.setLoginName(phoneNumber.getText().toString());
         return ac;
     }*/
+class joinQQGroup_setOnClickListener implements View.OnClickListener{
 
+    @Override
+    public void onClick(View v) {
+   if (joinQQGroup("3wwbrM4c9ZyIZ-zjJPHpcK2N4hnd8E5O")){
+       XToastUtils.success("成功");
+   }else {
+       XToastUtils.error("调起失败");
+   }
+    }
+}
 
     class cookie_setOnClickListener implements View.OnClickListener{
 

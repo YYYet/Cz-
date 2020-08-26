@@ -11,7 +11,7 @@ import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.mystep.model.InternetModel.getConfig;
+
 
 public class DatabaseModel {
     public static List findAll(){
@@ -30,12 +30,12 @@ public class DatabaseModel {
         contextSqliteBean.setCookie(token);
         contextSqliteBean.setMac(uuid);
         if (contextSqliteBean.save()){
-            ConfigBean configBean = new ConfigBean();
+/*          ConfigBean configBean = new ConfigBean();
             configBean.setPhone(phone);
             configBean.setUsername(userid);
             configBean.setWx(token);
             configBean.setMac(uuid);
-            getConfig(configBean);
+            getConfig(configBean);*/
             Looper.prepare();
             XToastUtils.success("保存成功,请返回首页使用cookie");
             Looper.loop();

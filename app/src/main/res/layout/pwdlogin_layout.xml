@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/xui_config_color_white"
- >
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
@@ -28,16 +28,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-           >
+            >
 
             <TextView
-                android:id="@+id/pwdlogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="密码登录"
-                tools:layout_editor_absoluteX="345dp"
-                tools:layout_editor_absoluteY="18dp"></TextView>
+                android:text=""></TextView>
             >
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -101,7 +98,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
-            android:id="@+id/id_phoneNumber"
+            android:id="@+id/id_loginPhoneNumber"
             android:layout_width="249dp"
             android:layout_height="64dp"
             android:layout_marginStart="95dp"
@@ -118,6 +115,7 @@
             app:met_floatingLabelText="手机号"
             app:met_maxCharacters="11" />
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/Vclayout"
             android:layout_width="0dp"
@@ -128,43 +126,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_phoneNumber">
+            app:layout_constraintTop_toBottomOf="@+id/id_loginPhoneNumber">
 
-            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
-                android:id="@+id/id_verificationCode"
-                android:layout_width="249dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="95dp"
-                android:layout_marginEnd="95dp"
-                android:layout_marginBottom="32dp"
-                android:layout_weight="3"
-                android:hint="校验码"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview"
-                app:layout_constraintVertical_bias="0.65999997"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelText="图片验证码"
-                app:met_maxCharacters="4" />
-            <ImageView
-                android:id="@+id/imageview"
-                android:layout_width="77dp"
-                android:layout_height="46dp"
-                android:layout_gravity="right"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="28dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:maxWidth="100sp"
-                android:maxHeight="100sp"
-                android:paddingTop="10sp"
-                android:src="@color/xui_btn_blue_normal_color"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintStart_toEndOf="@+id/id_verificationCode"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+
 
 
 
@@ -191,54 +155,39 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_phoneNumber">
+            app:layout_constraintTop_toBottomOf="@+id/id_loginPhoneNumber">
 
 
             <Button
-                android:id="@+id/id_commit"
+                android:id="@+id/id_login_commit"
                 android:layout_width="322dp"
                 android:layout_height="57dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="96dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/btn_selector"
-                android:text="获取短信验证码"
+                android:text="登录"
                 android:textColor="@color/xui_config_color_white"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></Button>
+
+            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+                android:id="@+id/id_loginPwd"
+                android:layout_width="249dp"
+                android:layout_height="64dp"
+                android:hint="输入密码"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="密码"
+                app:met_maxCharacters="11" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/cookie_modify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="51dp"
-            android:text="使用cookie"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="44dp"
-            android:text="使用cookie"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cookie_modify" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="44dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
